@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router-dom";
 
 const WatchVid = () => {
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get("v"));
 
   const dispatch = useDispatch();
 
