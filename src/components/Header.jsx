@@ -3,13 +3,16 @@ import { CiSearch } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TfiYoutube } from "react-icons/tfi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../redux/slices/miscSlice";
 import { YOUTUBE_SEARCH_SUGGESTION_API } from "../utils/constants";
+import { cacheResults } from "../redux/slices/searchSlice";
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  const searchCache = useSelector((store) => store.search);
 
   const dispatch = useDispatch();
 
@@ -19,7 +22,11 @@ const Header = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      getSearchSuggestion();
+      if (searchCache[searchTerm]) {
+        setSuggestions(searchCache[searchTerm]);
+      } else {
+        getSearchSuggestion();
+      }
     }, 250);
 
     return () => {
@@ -30,8 +37,13 @@ const Header = () => {
   const getSearchSuggestion = async () => {
     const response = await fetch(YOUTUBE_SEARCH_SUGGESTION_API + searchTerm);
     const json = await response.json();
-    console.log(json[1]);
     setSuggestions(json[1]);
+
+    dispatch(
+      cacheResults({
+        [searchTerm]: json[1],
+      })
+    );
   };
 
   return (
