@@ -44,6 +44,7 @@ const LiveChat = () => {
         onSubmit={(e) => {
           e.preventDefault();
           dispatch(addMessages({ name: "Md Moazzam", message: liveMessage }));
+          setLiveMessage("");
         }}
       >
         <input
