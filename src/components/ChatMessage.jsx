@@ -2,7 +2,7 @@ import React from "react";
 
 const ChatMessage = ({ name, message }) => {
   return (
-    <div className="flex items-start gap-2">
+    <div className="flex items-start mt-2">
       <img
         src="https://yt4.ggpht.com/ytc/AIdro_l4k42UWYQUhsK9Qf6vRxSUA6BmA1jCHkuxZzqDsTiyo3g=s64-c-k-c0x00ffffff-no-rj"
         alt="avatar"
